@@ -24,6 +24,10 @@ class AcademicCoordinationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $modelLabel = 'Coordenação';
+
+    protected static ?string $pluralModelLabel = 'Coordenações';
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -40,6 +44,7 @@ class AcademicCoordinationResource extends Resource
                     ->required(),
                 TextInput::make('phone')
                     ->label('Contato')
+                    ->mask('(99) 99999-9999')
                     ->tel(),
                 TextInput::make('email')
                     ->label('Email')
