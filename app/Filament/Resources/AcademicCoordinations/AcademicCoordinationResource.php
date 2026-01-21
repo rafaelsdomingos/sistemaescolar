@@ -22,6 +22,10 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Exports\AcademicCoordinationExporter;
+use Filament\Actions\ExportAction;
+use Filament\Actions\Exports\Models\Export;
+use Filament\Actions\Exports\Enums\ExportFormat;
 
 class AcademicCoordinationResource extends Resource
 {
@@ -87,6 +91,17 @@ class AcademicCoordinationResource extends Resource
             ])
             ->filters([
                 TrashedFilter::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(AcademicCoordinationExporter::class)
+                    ->label('Exportar Planilha')
+                    ->icon('heroicon-o-table-cells')
+                    ->fileName(fn (Export $export): string => "coordenações-{$export->getKey()}")
+                    ->formats([
+                        ExportFormat::Xlsx,
+                        ExportFormat::Csv,
+                    ])
             ])
             ->recordActions([
                 EditAction::make(),
