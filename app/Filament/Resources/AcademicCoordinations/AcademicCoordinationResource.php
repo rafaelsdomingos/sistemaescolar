@@ -29,15 +29,20 @@ class AcademicCoordinationResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nome')
                     ->required(),
                 TextInput::make('code')
+                    ->label('Sigla')
+                    ->unique()
                     ->required(),
                 TextInput::make('coordinator')
+                    ->label('Coordenador')
                     ->required(),
                 TextInput::make('phone')
+                    ->label('Contato')
                     ->tel(),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Email')
                     ->email(),
             ]);
     }
@@ -48,22 +53,28 @@ class AcademicCoordinationResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 TextColumn::make('code')
+                    ->label('Sigla')
                     ->searchable(),
                 TextColumn::make('coordinator')
+                    ->label('Coordenador(a)')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Contato')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Email')
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Data de Registro')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Data de Atualização')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

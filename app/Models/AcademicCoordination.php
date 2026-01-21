@@ -9,4 +9,12 @@ class AcademicCoordination extends Model
 {
     /** @use HasFactory<\Database\Factories\AcademicCoordinationFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'code',
+        'coordinator',
+        'phone',
+        'email',
+    ];
 }
