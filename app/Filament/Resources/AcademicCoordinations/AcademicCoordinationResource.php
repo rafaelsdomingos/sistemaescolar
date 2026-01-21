@@ -9,12 +9,19 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AcademicCoordinationResource extends Resource
 {
@@ -23,10 +30,6 @@ class AcademicCoordinationResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'name';
-
-    protected static ?string $modelLabel = 'Coordenação';
-
-    protected static ?string $pluralModelLabel = 'Coordenações';
 
     public static function form(Schema $schema): Schema
     {
@@ -37,13 +40,12 @@ class AcademicCoordinationResource extends Resource
                     ->required(),
                 TextInput::make('code')
                     ->label('Sigla')
-                    ->unique()
                     ->required(),
                 TextInput::make('coordinator')
-                    ->label('Coordenador')
+                    ->label('Coordenador(a)')
                     ->required(),
                 TextInput::make('phone')
-                    ->label('Contato')
+                    ->label('Fone')
                     ->mask('(99) 99999-9999')
                     ->tel(),
                 TextInput::make('email')
@@ -73,26 +75,30 @@ class AcademicCoordinationResource extends Resource
                     ->label('Email')
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->label('Data de Registro')
+                    ->label('Data de criação')
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->label('Data de Atualização')
+                    ->label('Data de atualização')
                     ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -102,5 +108,13 @@ class AcademicCoordinationResource extends Resource
         return [
             'index' => ManageAcademicCoordinations::route('/'),
         ];
+    }
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
