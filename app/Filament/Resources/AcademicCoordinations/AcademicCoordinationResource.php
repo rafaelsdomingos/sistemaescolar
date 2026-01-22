@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Exports\AcademicCoordinationExporter;
 use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
 use Filament\Actions\Exports\Models\Export;
 use Filament\Actions\Exports\Enums\ExportFormat;
 
@@ -103,7 +104,6 @@ class AcademicCoordinationResource extends Resource
                         ExportFormat::Xlsx,
                         ExportFormat::Csv,
                     ])
-                    ->fileDisk('public')
             ])
             ->recordActions([
                 EditAction::make(),
@@ -117,6 +117,16 @@ class AcademicCoordinationResource extends Resource
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+                ExportBulkAction::make()
+                    ->exporter(AcademicCoordinationExporter::class)
+                    ->label('Exportar dados selecionados')
+                    ->icon('heroicon-o-table-cells')
+                    ->enableVisibleTableColumnsByDefault()
+                    ->fileName(fn (Export $export): string => "coordenações-{$export->getKey()}")
+                    ->formats([
+                        ExportFormat::Xlsx,
+                        ExportFormat::Csv,
+                    ])
             ]);
     }
 
