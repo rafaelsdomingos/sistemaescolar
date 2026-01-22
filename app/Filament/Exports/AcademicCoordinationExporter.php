@@ -20,6 +20,8 @@ class AcademicCoordinationExporter extends Exporter
             ExportColumn::make('coordinator')->label('Coordenador(a)'),
             ExportColumn::make('phone')->label('Fone'),
             ExportColumn::make('email')->label('E-mail'),
+            ExportColumn::make('created_at')->label('Data de criação'),
+            ExportColumn::make('updated_at')->label('Data de atualização'),
         ];
     }
 

@@ -97,11 +97,13 @@ class AcademicCoordinationResource extends Resource
                     ->exporter(AcademicCoordinationExporter::class)
                     ->label('Exportar Planilha')
                     ->icon('heroicon-o-table-cells')
+                    ->enableVisibleTableColumnsByDefault()
                     ->fileName(fn (Export $export): string => "coordenações-{$export->getKey()}")
                     ->formats([
                         ExportFormat::Xlsx,
                         ExportFormat::Csv,
                     ])
+                    ->fileDisk('public')
             ])
             ->recordActions([
                 EditAction::make(),
