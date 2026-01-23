@@ -6,6 +6,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use App\Enums\RaceColor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
+
 
 class StudentForm
 {
@@ -19,7 +21,7 @@ class StudentForm
                 TextInput::make('nationality')
                     ->required(),
                 TextInput::make('birthplace'),
-                TextInput::make('birthdate'),
+                DatePicker::make('birthdate'),
                 TextInput::make('gender'),
                 Select::make('race_color')
                     ->label('Raça/Cor')

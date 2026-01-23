@@ -4,9 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\RaceColor;
 
 class Student extends Model
 {
     /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'social_name',
+        'nationality',
+        'birthplace',
+        'birthdate',
+        'gender',
+        'race_color',
+    ];
+
+    protected $casts = [
+        'race_color' => RaceColor::class,
+    ];
 }
