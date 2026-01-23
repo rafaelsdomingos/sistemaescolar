@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Enums\RaceColor;
 
 class StudentsTable
 {
@@ -28,7 +29,8 @@ class StudentsTable
                 TextColumn::make('gender')
                     ->searchable(),
                 TextColumn::make('race_color')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn (?RaceColor $state) => $state?->label()),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
