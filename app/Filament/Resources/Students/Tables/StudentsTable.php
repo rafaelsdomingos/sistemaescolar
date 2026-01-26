@@ -17,26 +17,36 @@ class StudentsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 TextColumn::make('social_name')
+                    ->label('Nome Social')
                     ->searchable(),
                 TextColumn::make('nationality')
+                    ->label('Nacionalidade')
                     ->searchable(),
                 TextColumn::make('birthplace')
+                    ->label('Naturalidade')
                     ->searchable(),
                 TextColumn::make('birthdate')
+                    ->label('Data de Nascimento')
+                    ->date('d/m/Y')
                     ->searchable(),
                 TextColumn::make('gender')
+                    ->label('Gẽnero')
                     ->searchable(),
                 TextColumn::make('race_color')
+                    ->label('Raça/Cor')
                     ->searchable()
                     ->formatStateUsing(fn (?RaceColor $state) => $state?->label()),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Data de criação')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Data de atualização')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
