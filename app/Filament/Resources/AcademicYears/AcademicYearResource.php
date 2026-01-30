@@ -30,9 +30,13 @@ class AcademicYearResource extends Resource
 {
     protected static ?string $model = AcademicYear::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendar;
 
     protected static ?string $recordTitleAttribute = 'year';
+
+    protected static ?string $modelLabel = 'Ano letivo';
+
+    protected static ?string $pluralModelLabel = 'Anos letivos';
 
     public static function form(Schema $schema): Schema
     {
