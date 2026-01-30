@@ -17,12 +17,17 @@ class StudentForm
             ->components([
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('social_name'),
+                TextInput::make('social_name')
+                    ->label('Nome Social'),
                 TextInput::make('nationality')
+                    ->label('Nacionalidade')
                     ->required(),
-                TextInput::make('birthplace'),
-                DatePicker::make('birthdate'),
-                TextInput::make('gender'),
+                TextInput::make('birthplace')
+                    ->label('Naturalidade'),
+                DatePicker::make('birthdate')
+                    ->label('Data de Nascimento'),
+                TextInput::make('gender')
+                    ->label('Gênero'),
                 Select::make('race_color')
                     ->label('Raça/Cor')
                     ->options(
