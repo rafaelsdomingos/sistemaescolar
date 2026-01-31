@@ -7,23 +7,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class SchoolClass extends Model
+class Workshop extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'course_id',
+        'academic_coordination_id',
         'academic_year_id',
         'name',
         'shift'
     ];
 
-    public function course(): BelongsTo 
+    public function academicCoordination(): BelongsTo
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(AcademicCoordination::class);
     }
 
-    public function academicYear(): BelongsTo 
+    public function academicYear(): BelongsTo
     {
         return $this->belongsTo(AcademicYear::class);
     }
