@@ -24,6 +24,10 @@ class SchoolClassResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $modelLabel = 'Turma';
+
+    protected static ?string $pluralModelLabel = 'Turmas';
+
     public static function form(Schema $schema): Schema
     {
         return SchoolClassForm::configure($schema);

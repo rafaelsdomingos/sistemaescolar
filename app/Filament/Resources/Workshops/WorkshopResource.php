@@ -24,6 +24,10 @@ class WorkshopResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $modelLabel = 'Oficina';
+
+    protected static ?string $pluralModelLabel = 'Oficinas';
+
     public static function form(Schema $schema): Schema
     {
         return WorkshopForm::configure($schema);

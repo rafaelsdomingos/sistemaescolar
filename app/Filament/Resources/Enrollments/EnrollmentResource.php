@@ -37,6 +37,10 @@ class EnrollmentResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Matrícula';
+
+    protected static ?string $pluralModelLabel = 'Matrículas';
+
     public static function form(Schema $schema): Schema
     {
         return $schema
