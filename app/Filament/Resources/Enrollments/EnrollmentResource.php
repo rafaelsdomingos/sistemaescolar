@@ -45,10 +45,10 @@ class EnrollmentResource extends Resource
                 MorphToSelect::make('enrollable')
                     ->types([
                         Type::make(SchoolClass::class)
-                            ->label('Cursos')
+                            ->label('Turma de um Curso')
                             ->titleAttribute('name'),
                         Type::make(Workshop::class)
-                            ->label('Oficinas')
+                            ->label('Oficina')
                             ->titleAttribute('name'),
                     ])
                     ->native(false)
@@ -102,10 +102,11 @@ class EnrollmentResource extends Resource
                 TextColumn::make('student.name')
                     ->label('Estudante')
                     ->sortable(),
-                TextColumn::make('enrollable_type')
-                    ->searchable(),
+                // TextColumn::make('enrollable_type')
+                //     ->searchable(),
                 TextColumn::make('enrollable.name')
-                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('enrollable.course.name')
                     ->sortable(),
                 TextColumn::make('start_date')
                     ->date()
