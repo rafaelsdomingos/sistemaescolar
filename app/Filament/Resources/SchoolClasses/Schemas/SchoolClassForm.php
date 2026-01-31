@@ -13,14 +13,26 @@ class SchoolClassForm
         return $schema
             ->components([
                 Select::make('course_id')
+                    ->label('Curso')
                     ->relationship('course', 'name')
+                    ->native(false)
                     ->required(),
                 Select::make('academic_year_id')
-                    ->relationship('academicYear', 'id')
+                    ->label('Ano letivo')
+                    ->relationship('academicYear', 'year')
+                    ->native(false)
                     ->required(),
                 TextInput::make('name')
+                    ->label('Nome da turma')
                     ->required(),
-                TextInput::make('shift')
+                Select::make('shift')
+                    ->label('Turno')
+                    ->native(false)
+                    ->options([
+                        'Manhã' => 'Manhã',
+                        'Tarde' => 'Tarde',
+                        'Noite' => 'Noite'
+                    ])
                     ->required(),
             ]);
     }

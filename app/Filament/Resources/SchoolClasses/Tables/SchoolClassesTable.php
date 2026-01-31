@@ -17,13 +17,17 @@ class SchoolClassesTable
     {
         return $table
             ->columns([
-                TextColumn::make('course.name')
-                    ->searchable(),
-                TextColumn::make('academicYear.id')
-                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Turma')
+                    ->searchable(),
+                TextColumn::make('course.name')
+                    ->label('Curso')
+                    ->searchable(),
+                TextColumn::make('academicYear.year')
+                    ->label('Ano letivo')
                     ->searchable(),
                 TextColumn::make('shift')
+                    ->label('Turno')
                     ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
