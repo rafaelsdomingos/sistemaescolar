@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Courses\Schemas;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use App\Enums\CourseModality;
 
 class CourseForm
 {
@@ -21,9 +22,15 @@ class CourseForm
                     ->label('Nome')
                     ->unique()
                     ->required(),
-                TextInput::make('modality')
+                Select::make('modality')
                     ->label('Modalidade')
-                    ->required(),
+                    ->options(
+                        collect(CourseModality::cases())
+                            ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
+                            ->toArray()
+                    )
+                    ->required()
+                    ->native(false)
             ]);
     }
 }

@@ -28,16 +28,28 @@ class SchoolClassesRelationManager extends RelationManager
 {
     protected static string $relationship = 'schoolClasses';
 
+    protected static ?string $title = 'Turmas do curso';
+
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Select::make('academic_year_id')
-                    ->relationship('academicYear', 'id')
+                    ->relationship('academicYear', 'year')
+                    ->label('Ano letivo')
+                    ->native(false)
                     ->required(),
                 TextInput::make('name')
+                    ->label('Nome da turma')
                     ->required(),
-                TextInput::make('shift')
+                Select::make('shift')
+                    ->label('Turno')
+                    ->options([
+                        'Manhã' => 'Manhã',
+                        'Tarde' => 'Tarde',
+                        'Noite' => 'Noite'
+                    ])
+                    ->native(false)
                     ->required(),
             ]);
     }
@@ -47,11 +59,17 @@ class SchoolClassesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('school_class_id')
             ->columns([
-                TextColumn::make('academicYear.id')
+                TextColumn::make('academicYear.year')
+                    ->label('Ano letivo')
                     ->searchable(),
                 TextColumn::make('name')
+                    ->label('Turma')
+                    ->searchable(),
+                TextColumn::make('course.name')
+                    ->label('Curso')
                     ->searchable(),
                 TextColumn::make('shift')
+                    ->label('Turno')
                     ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
@@ -71,18 +89,18 @@ class SchoolClassesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make(),
-                AssociateAction::make(),
+                //AssociateAction::make(),
             ])
             ->recordActions([
                 EditAction::make(),
-                DissociateAction::make(),
+                //DissociateAction::make(),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DissociateBulkAction::make(),
+                    //DissociateBulkAction::make(),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),

@@ -10,6 +10,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use App\Enums\CourseModality;
 
 class CoursesTable
 {
@@ -18,10 +19,14 @@ class CoursesTable
         return $table
             ->columns([
                 TextColumn::make('academicCoordination.name')
+                    ->label('Coordenação')
                     ->searchable(),
                 TextColumn::make('name')
+                    ->label('Curso')
                     ->searchable(),
                 TextColumn::make('modality')
+                    ->label('Modalidade')
+                    ->formatStateUsing(fn (?CourseModality $state) => $state?->label())
                     ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
