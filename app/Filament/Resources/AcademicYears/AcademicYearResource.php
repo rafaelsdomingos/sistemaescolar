@@ -30,7 +30,7 @@ class AcademicYearResource extends Resource
 {
     protected static ?string $model = AcademicYear::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendar;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
     protected static ?string $recordTitleAttribute = 'year';
 
@@ -68,15 +68,14 @@ class AcademicYearResource extends Resource
             ->columns([
                 TextColumn::make('year')
                     ->label('Ano letivo')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('start_date')
                     ->label('Data de início')
-                    ->date()
-                    ->sortable(),
+                    ->date('d/m/Y'),
                 TextColumn::make('end_date')
                     ->label('Data de término')
-                    ->date()
-                    ->sortable(),
+                    ->date('d/m/Y'),
                 IconColumn::make('is_current')
                     ->label('Ano vigente')
                     ->boolean(),

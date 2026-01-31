@@ -32,7 +32,7 @@ class AcademicCoordinationResource extends Resource
 {
     protected static ?string $model = AcademicCoordination::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFlag;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -46,9 +46,11 @@ class AcademicCoordinationResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->label('Nome')
+                    ->unique()
                     ->required(),
                 TextInput::make('code')
                     ->label('Sigla')
+                    ->unique()
                     ->required(),
                 TextInput::make('coordinator')
                     ->label('Coordenador(a)')
