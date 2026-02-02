@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('shift');
             $table->softDeletes();
             $table->timestamps();
+            $table->unique(['name', 'academic_year_id', 'course_id']);
         });
     }
 
