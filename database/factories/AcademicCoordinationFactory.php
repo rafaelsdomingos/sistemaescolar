@@ -17,7 +17,15 @@ class AcademicCoordinationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'code' => strtoupper(fake()->bothify('CUR-###')),
+            'coordinator' => fake()->name(),
+            'phone' => fake()->boolean(70)
+                ? fake('pt_BR')->cellphoneNumber()
+                : null,
+            'email' => fake()->boolean(70)
+                ? fake()->unique()->safeEmail()
+                : null,
         ];
     }
 }

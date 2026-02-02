@@ -18,7 +18,18 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'nationality' => 'Brasileira',
+            'birthplace' => fake('pt_BR')->city(),
+            'birthdate' => fake()->dateTimeBetween('-60 years', '-10 years'),
+            'gender' => fake()->randomElement([
+                'Masculino',
+                'Feminino',
+                'Não-binário',
+                'Prefiro não informar',
+            ]),
+            'race_color' => fake()->randomElement(RaceColor::cases()),
+
         ];
     }
 
