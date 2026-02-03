@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\EnrollStatus;
 
 
 class Enrollment extends Model
@@ -20,6 +21,10 @@ class Enrollment extends Model
         'end_date',
         'status',
         'notes'
+    ];
+
+    protected $casts = [
+        'modality' => EnrollStatus::class,
     ];
 
     public function enrollable(): MorphTo

@@ -24,10 +24,14 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Enums\EnrollStatus;
 
 class EnrollmentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'enrollments';
+
+    protected static ?string $title = 'Matrículas';
+
 
     public function form(Schema $schema): Schema
     {
@@ -41,11 +45,18 @@ class EnrollmentsRelationManager extends RelationManager
                     ->required(),
                 DatePicker::make('start_date')
                     ->label('Data de abertura de matrícula')
+                    ->default(now())
                     ->required(),
                 DatePicker::make('end_date')
                     ->label('Data de fechamento de matrícula'),
-                TextInput::make('status')
+                Select::make('status')
                     ->label('Status')
+                    ->options([
+                        collect(EnrollStatus::cases())
+                            ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
+                            ->toArray()
+                    ])
+                    ->native(false)
                     ->required(),
                 TextInput::make('notes')
                     ->label('Observações'),
@@ -61,12 +72,13 @@ class EnrollmentsRelationManager extends RelationManager
                     ->label('Estudante')
                     ->searchable(),
                 TextColumn::make('start_date')
-                    ->label('Data de abertura de matrícula')
+                    ->label('Data de matrícula')
                     ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('end_date')
                     ->date('d/m/Y')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->searchable(),
                 TextColumn::make('notes')
@@ -89,19 +101,20 @@ class EnrollmentsRelationManager extends RelationManager
                 TrashedFilter::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
-                AssociateAction::make(),
+                CreateAction::make()
+                    ->label('Matricular Aluno'),
+                //AssociateAction::make(),
             ])
             ->recordActions([
                 EditAction::make(),
-                DissociateAction::make(),
+                //DissociateAction::make(),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DissociateBulkAction::make(),
+                    //DissociateBulkAction::make(),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
