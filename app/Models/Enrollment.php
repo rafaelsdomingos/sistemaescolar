@@ -24,7 +24,7 @@ class Enrollment extends Model
     ];
 
     protected $casts = [
-        'modality' => EnrollStatus::class,
+        'status' => EnrollStatus::class,
     ];
 
     public function enrollable(): MorphTo

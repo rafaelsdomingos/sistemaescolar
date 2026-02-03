@@ -30,8 +30,7 @@ class EnrollmentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'enrollments';
 
-    protected static ?string $title = 'Matrículas';
-
+    protected static ?string $title = 'Estudantes matriculados';
 
     public function form(Schema $schema): Schema
     {
@@ -80,6 +79,15 @@ class EnrollmentsRelationManager extends RelationManager
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
+                    ->formatStateUsing(fn (?EnrollStatus $state) => $state?->label())
+                    ->badge()
+                    ->color(fn (?EnrollStatus $state): string => match ($state) {
+                        EnrollStatus::cursando => 'info',
+                        EnrollStatus::aprovado => 'success',
+                        EnrollStatus::reprovado => 'danger',
+                        EnrollStatus::abandono => 'danger',
+                        EnrollStatus::trancado => 'gray',
+                    })
                     ->searchable(),
                 TextColumn::make('notes')
                     ->label('Observações')
@@ -102,7 +110,8 @@ class EnrollmentsRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make()
-                    ->label('Matricular Aluno'),
+                    ->label('Nova matrícula')
+                    ->modalHeading('Matricular estudante'),
                 //AssociateAction::make(),
             ])
             ->recordActions([
