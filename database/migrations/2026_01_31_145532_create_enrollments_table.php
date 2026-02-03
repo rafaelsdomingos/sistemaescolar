@@ -22,6 +22,12 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->string('status');
             $table->string('notes')->nullable();
+            $table->unique([
+                'student_id',
+                'enrollable_id',
+                'enrollable_type',
+                'deleted_at',
+            ], 'unique_student_enrollment' );
             $table->softDeletes();
             $table->timestamps();
         });
