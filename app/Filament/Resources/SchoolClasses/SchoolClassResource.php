@@ -9,6 +9,7 @@ use App\Filament\Resources\SchoolClasses\Schemas\SchoolClassForm;
 use App\Filament\Resources\SchoolClasses\Tables\SchoolClassesTable;
 use App\Models\SchoolClass;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -27,6 +28,9 @@ class SchoolClassResource extends Resource
     protected static ?string $modelLabel = 'Turma';
 
     protected static ?string $pluralModelLabel = 'Turmas';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
+
 
     public static function form(Schema $schema): Schema
     {

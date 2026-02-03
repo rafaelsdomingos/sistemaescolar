@@ -9,6 +9,7 @@ use App\Filament\Resources\Workshops\Schemas\WorkshopForm;
 use App\Filament\Resources\Workshops\Tables\WorkshopsTable;
 use App\Models\Workshop;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -27,6 +28,9 @@ class WorkshopResource extends Resource
     protected static ?string $modelLabel = 'Oficina';
 
     protected static ?string $pluralModelLabel = 'Oficinas';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
+
 
     public static function form(Schema $schema): Schema
     {

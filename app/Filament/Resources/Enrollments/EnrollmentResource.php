@@ -7,6 +7,7 @@ use App\Models\Enrollment;
 use App\Models\SchoolClass;
 use App\Models\Workshop;
 use BackedEnum;
+use UnitEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -40,6 +41,9 @@ class EnrollmentResource extends Resource
     protected static ?string $modelLabel = 'Matrícula';
 
     protected static ?string $pluralModelLabel = 'Matrículas';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
+
 
     protected static bool $shouldRegisterNavigation = false;
 

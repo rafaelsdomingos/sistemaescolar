@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AcademicCoordinations;
 use App\Filament\Resources\AcademicCoordinations\Pages\ManageAcademicCoordinations;
 use App\Models\AcademicCoordination;
 use BackedEnum;
+use UnitEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -39,6 +40,9 @@ class AcademicCoordinationResource extends Resource
     protected static ?string $modelLabel = 'Coordenação';
 
     protected static ?string $pluralModelLabel = 'Coordenações';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
+
 
     public static function form(Schema $schema): Schema
     {

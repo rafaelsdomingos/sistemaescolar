@@ -5,6 +5,7 @@ namespace App\Filament\Resources\AcademicYears;
 use App\Filament\Resources\AcademicYears\Pages\ManageAcademicYears;
 use App\Models\AcademicYear;
 use BackedEnum;
+use UnitEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -37,6 +38,8 @@ class AcademicYearResource extends Resource
     protected static ?string $modelLabel = 'Ano letivo';
 
     protected static ?string $pluralModelLabel = 'Anos letivos';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
 
     public static function form(Schema $schema): Schema
     {

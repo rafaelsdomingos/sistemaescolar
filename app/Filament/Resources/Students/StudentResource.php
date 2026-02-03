@@ -11,6 +11,7 @@ use App\Filament\Resources\Students\Schemas\StudentInfolist;
 use App\Filament\Resources\Students\Tables\StudentsTable;
 use App\Models\Student;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -27,6 +28,9 @@ class StudentResource extends Resource
     protected static ?string $modelLabel = 'Estudante';
 
     protected static ?string $pluralModelLabel = 'Estudantes';
+
+    protected static string | UnitEnum | null $navigationGroup = 'Escolas';
+
 
     public static function form(Schema $schema): Schema
     {

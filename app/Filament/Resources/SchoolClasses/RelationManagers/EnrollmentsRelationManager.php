@@ -35,18 +35,20 @@ class EnrollmentsRelationManager extends RelationManager
             ->components([
                 Select::make('student_id')
                     ->relationship('student', 'name')
+                    ->label('Estudante')
+                    ->preload()
+                    ->searchable()
                     ->required(),
-                TextInput::make('enrollable_type')
-                    ->required(),
-                TextInput::make('enrollable_id')
-                    ->required()
-                    ->numeric(),
                 DatePicker::make('start_date')
+                    ->label('Data de abertura de matrícula')
                     ->required(),
-                DatePicker::make('end_date'),
+                DatePicker::make('end_date')
+                    ->label('Data de fechamento de matrícula'),
                 TextInput::make('status')
+                    ->label('Status')
                     ->required(),
-                TextInput::make('notes'),
+                TextInput::make('notes')
+                    ->label('Observações'),
             ]);
     }
 
@@ -56,21 +58,19 @@ class EnrollmentsRelationManager extends RelationManager
             ->recordTitleAttribute('enrollment_id')
             ->columns([
                 TextColumn::make('student.name')
+                    ->label('Estudante')
                     ->searchable(),
-                TextColumn::make('enrollable_type')
-                    ->searchable(),
-                TextColumn::make('enrollable_id')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('start_date')
-                    ->date()
+                    ->label('Data de abertura de matrícula')
+                    ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('end_date')
-                    ->date()
+                    ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('status')
                     ->searchable(),
                 TextColumn::make('notes')
+                    ->label('Observações')
                     ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
