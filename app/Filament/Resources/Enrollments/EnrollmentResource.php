@@ -41,6 +41,9 @@ class EnrollmentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Matrículas';
 
+    protected static bool $shouldRegisterNavigation = false;
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema

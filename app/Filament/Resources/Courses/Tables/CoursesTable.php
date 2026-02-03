@@ -18,11 +18,11 @@ class CoursesTable
     {
         return $table
             ->columns([
-                TextColumn::make('academicCoordination.name')
-                    ->label('Coordenação')
-                    ->searchable(),
                 TextColumn::make('name')
                     ->label('Curso')
+                    ->searchable(),
+                TextColumn::make('academicCoordination.name')
+                    ->label('Coordenação')
                     ->searchable(),
                 TextColumn::make('modality')
                     ->label('Modalidade')

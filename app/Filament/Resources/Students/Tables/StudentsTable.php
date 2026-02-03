@@ -19,9 +19,9 @@ class StudentsTable
                 TextColumn::make('name')
                     ->label('Nome')
                     ->searchable(),
-                TextColumn::make('social_name')
-                    ->label('Nome Social')
-                    ->searchable(),
+                //TextColumn::make('social_name')
+                //    ->label('Nome Social')
+                //    ->searchable(),
                 TextColumn::make('nationality')
                     ->label('Nacionalidade')
                     ->searchable(),
