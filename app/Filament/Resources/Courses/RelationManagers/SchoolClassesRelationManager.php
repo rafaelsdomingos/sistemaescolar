@@ -23,6 +23,8 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
+use Filament\Schemas\Components\Utilities\Get;
 
 class SchoolClassesRelationManager extends RelationManager
 {
@@ -35,21 +37,31 @@ class SchoolClassesRelationManager extends RelationManager
         return $schema
             ->components([
                 Select::make('academic_year_id')
-                    ->relationship('academicYear', 'year')
                     ->label('Ano letivo')
+                    ->relationship('academicYear', 'year')
                     ->native(false)
                     ->required(),
                 TextInput::make('name')
                     ->label('Nome da turma')
-                    ->required(),
+                    ->required()
+                    ->rules([
+                        fn (Get $get, $record) =>
+                            Rule::unique('school_classes', 'name')
+                                ->where('course_id', $this->getOwnerRecord()->id)
+                                ->where('academic_year_id', $get('academic_year_id'))
+                                ->ignore($record?->id),
+                    ])
+                    ->validationMessages([
+                        'unique' => 'Já existe uma turma com esse nome neste ano letivo.',
+                    ]),
                 Select::make('shift')
                     ->label('Turno')
+                    ->native(false)
                     ->options([
                         'Manhã' => 'Manhã',
                         'Tarde' => 'Tarde',
                         'Noite' => 'Noite'
                     ])
-                    ->native(false)
                     ->required(),
             ]);
     }
@@ -88,7 +100,9 @@ class SchoolClassesRelationManager extends RelationManager
                 TrashedFilter::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
+                CreateAction::make()
+                    ->label('Nova turma')
+                    ->modalHeading('Criar nova turma'),
                 //AssociateAction::make(),
             ])
             ->recordActions([
