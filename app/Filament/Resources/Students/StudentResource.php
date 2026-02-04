@@ -31,7 +31,6 @@ class StudentResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Escolas';
 
-
     public static function form(Schema $schema): Schema
     {
         return StudentForm::configure($schema);
