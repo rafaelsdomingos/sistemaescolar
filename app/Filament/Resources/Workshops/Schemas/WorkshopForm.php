@@ -13,14 +13,23 @@ class WorkshopForm
         return $schema
             ->components([
                 Select::make('academic_year_id')
-                    ->relationship('academicYear', 'id')
+                    ->label('Ano letivo')
+                    ->relationship('academicYear', 'year')
                     ->required(),
                 Select::make('academic_coordination_id')
+                    ->label('Coordenação')
                     ->relationship('academicCoordination', 'name')
                     ->required(),
                 TextInput::make('name')
+                    ->label('Nome da oficina')
                     ->required(),
-                TextInput::make('shift')
+                Select::make('shift')
+                    ->label('Turno')
+                    ->options([
+                        'Manhã' => 'Manhã',
+                        'Tarde' => 'Tarde',
+                        'Noite' => 'Noite'
+                    ])
                     ->required(),
             ]);
     }

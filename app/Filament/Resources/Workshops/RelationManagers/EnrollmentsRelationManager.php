@@ -27,10 +27,13 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Enums\EnrollStatus;
 
 class EnrollmentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'enrollments';
+
+    protected static ?string $title = 'Estudantes matriculados';
 
     public function form(Schema $schema): Schema
     {
@@ -39,17 +42,22 @@ class EnrollmentsRelationManager extends RelationManager
                 Select::make('student_id')
                     ->relationship('student', 'name')
                     ->required(),
-                TextInput::make('enrollable_type')
-                    ->required(),
-                TextInput::make('enrollable_id')
-                    ->required()
-                    ->numeric(),
                 DatePicker::make('start_date')
+                    ->label('Data de matricula')
+                    ->default(now())
                     ->required(),
-                DatePicker::make('end_date'),
-                TextInput::make('status')
+                DatePicker::make('end_date')
+                    ->label('Data de fechamento'),
+                Select::make('status')
+                    ->options([
+                        collect(EnrollStatus::cases())
+                            ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
+                            ->toArray()
+                    ])
+                    ->native(false)
                     ->required(),
-                TextInput::make('notes'),
+                TextInput::make('notes')
+                    ->label('Observações'),
             ]);
     }
 
@@ -88,21 +96,29 @@ class EnrollmentsRelationManager extends RelationManager
             ->recordTitleAttribute('enrollment_id')
             ->columns([
                 TextColumn::make('student.name')
+                    ->label('Estudante')
                     ->searchable(),
-                TextColumn::make('enrollable_type')
-                    ->searchable(),
-                TextColumn::make('enrollable_id')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('start_date')
-                    ->date()
+                    ->label('Data de matrícula')
+                    ->date('d/m/Y')
                     ->sortable(),
                 TextColumn::make('end_date')
-                    ->date()
-                    ->sortable(),
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
+                    ->formatStateUsing(fn (?EnrollStatus $state) => $state?->label())
+                    ->badge()
+                    ->color(fn (?EnrollStatus $state): string => match ($state) {
+                        EnrollStatus::cursando => 'info',
+                        EnrollStatus::aprovado => 'success',
+                        EnrollStatus::reprovado => 'danger',
+                        EnrollStatus::abandono => 'danger',
+                        EnrollStatus::trancado => 'gray',
+                    })
                     ->searchable(),
                 TextColumn::make('notes')
+                    ->label('Observações')
                     ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
@@ -121,20 +137,22 @@ class EnrollmentsRelationManager extends RelationManager
                 TrashedFilter::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
-                AssociateAction::make(),
+                CreateAction::make()
+                    ->label('Nova matrícula')
+                    ->modalHeading('Matricular estudante'),
+                //AssociateAction::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
+                //ViewAction::make(),
                 EditAction::make(),
-                DissociateAction::make(),
+                //DissociateAction::make(),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DissociateBulkAction::make(),
+                    //DissociateBulkAction::make(),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
