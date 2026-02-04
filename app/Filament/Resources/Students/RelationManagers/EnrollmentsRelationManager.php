@@ -23,6 +23,8 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\SchoolClass;
+use App\Models\Workshop;
 
 class EnrollmentsRelationManager extends RelationManager
 {
@@ -52,18 +54,36 @@ class EnrollmentsRelationManager extends RelationManager
             ->recordTitleAttribute('enrollment_id')
             ->columns([
                 TextColumn::make('enrollable_type')
-                    ->searchable(),
+                    ->label('Tipo de Atividade')
+                    ->formatStateUsing(fn (string $state) => match ($state) {
+                        SchoolClass::class => 'Curso',
+                        Workshop::class => 'Oficina',
+                        default => 'Outro',
+                    })
+                    ->badge()
+                    ->color(fn (string $state) => match ($state) {
+                        SchoolClass::class => 'success',
+                        Workshop::class => 'info',
+                        default => 'gray',
+                    }),
                 TextColumn::make('enrollable.name')
+                    ->label('Turma')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('enrollable.course.name')
+                    ->label('Curso')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('start_date')
+                    ->label('Data de matrícula')
                     ->date()
                     ->sortable(),
                 TextColumn::make('status')
                     ->searchable(),
                 TextColumn::make('notes')
+                    ->label('Observação')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
