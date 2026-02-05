@@ -41,6 +41,9 @@ class EnrollmentsRelationManager extends RelationManager
             ->components([
                 Select::make('student_id')
                     ->relationship('student', 'name')
+                    ->preload()
+                    ->native(false)
+                    ->searchable()
                     ->required(),
                 DatePicker::make('start_date')
                     ->label('Data de matricula')
