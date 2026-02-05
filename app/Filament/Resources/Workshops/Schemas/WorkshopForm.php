@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Workshops\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Schema;
 
 class WorkshopForm
@@ -22,6 +23,12 @@ class WorkshopForm
                     ->required(),
                 TextInput::make('name')
                     ->label('Nome da oficina')
+                    ->required(),
+                Datepicker::make('start_date')
+                    ->label('Data de início')
+                    ->required(),
+                Datepicker::make('end_date')
+                    ->label('Data de encerramento')
                     ->required(),
                 Select::make('shift')
                     ->label('Turno')
