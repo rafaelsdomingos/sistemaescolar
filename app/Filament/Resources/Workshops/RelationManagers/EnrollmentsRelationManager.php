@@ -52,11 +52,11 @@ class EnrollmentsRelationManager extends RelationManager
                 DatePicker::make('end_date')
                     ->label('Data de fechamento'),
                 Select::make('status')
-                    ->options([
+                    ->options(
                         collect(EnrollStatus::cases())
                             ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
                             ->toArray()
-                    ])
+                    )
                     ->native(false)
                     ->required(),
                 TextInput::make('notes')

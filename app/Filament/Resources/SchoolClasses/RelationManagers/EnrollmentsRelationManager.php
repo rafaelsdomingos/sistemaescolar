@@ -62,11 +62,11 @@ class EnrollmentsRelationManager extends RelationManager
                     ->label('Data de fechamento de matrícula'),
                 Select::make('status')
                     ->label('Status')
-                    ->options([
+                    ->options(
                         collect(EnrollStatus::cases())
                             ->mapWithKeys(fn ($case) => [$case->value => $case->label()])
                             ->toArray()
-                    ])
+                    )
                     ->native(false)
                     ->required(),
                 TextInput::make('notes')

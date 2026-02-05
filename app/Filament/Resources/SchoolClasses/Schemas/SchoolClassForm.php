@@ -26,13 +26,13 @@ class SchoolClassForm
                 TextInput::make('name')
                     ->label('Nome da turma')
                     ->required()
-                    ->rules([
+                    ->rules(
                         fn (callable $get, $record) =>
                             Rule::unique('school_classes', 'name')
                                 ->where('course_id', $get('course_id'))
                                 ->where('academic_year_id', $get('academic_year_id'))
                                 ->ignore($record?->id),
-                    ])
+                    )
                     ->validationMessages([
                         'unique' => 'Já existe uma turma com esse nome neste ano letivo.',
                     ]),
