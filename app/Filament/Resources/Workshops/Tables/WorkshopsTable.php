@@ -17,14 +17,17 @@ class WorkshopsTable
     {
         return $table
             ->columns([
-                TextColumn::make('academicYear.year')
-                    ->label('Ano letivo')
+                TextColumn::make('name')
+                    ->label('Nome da oficina')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('academicCoordination.name')
                     ->label('Coordenação')
+                    ->sortable()
                     ->searchable(),
-                TextColumn::make('name')
-                    ->label('Nome da oficina')
+                TextColumn::make('academicYear.year')
+                    ->label('Ano letivo')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('shift')
                     ->label('Turno')

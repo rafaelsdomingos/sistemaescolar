@@ -19,12 +19,19 @@ class SchoolClassesTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Turma')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('course.name')
                     ->label('Curso')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('course.academicCoordination.code')
+                    ->label('Coordenação')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('academicYear.year')
                     ->label('Ano letivo')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('shift')
                     ->label('Turno')

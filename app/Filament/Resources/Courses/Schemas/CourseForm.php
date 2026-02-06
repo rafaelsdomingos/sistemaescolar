@@ -32,7 +32,7 @@ class CourseForm
                     ->required()
                     ->native(false),
                 TextInput::make('description')
-                    ->label('Description')
+                    ->label('Descrição')
                     ->unique()
                     ->required(),
             ]);
