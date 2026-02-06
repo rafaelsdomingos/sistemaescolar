@@ -30,7 +30,11 @@ class CourseForm
                             ->toArray()
                     )
                     ->required()
-                    ->native(false)
+                    ->native(false),
+                TextInput::make('description')
+                    ->label('Description')
+                    ->unique()
+                    ->required(),
             ]);
     }
 }

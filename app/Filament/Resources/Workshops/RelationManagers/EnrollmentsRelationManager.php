@@ -28,6 +28,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Enums\EnrollStatus;
+use Filament\Schemas\Components\Utilities\Get;
+use Illuminate\Validation\Rule;
 
 class EnrollmentsRelationManager extends RelationManager
 {
@@ -41,10 +43,20 @@ class EnrollmentsRelationManager extends RelationManager
             ->components([
                 Select::make('student_id')
                     ->relationship('student', 'name')
+                    ->label('Estudante')
                     ->preload()
-                    ->native(false)
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->rules([
+                        fn (Get $get, $record) =>
+                            Rule::unique('enrollments', 'student_id')
+                                ->where('enrollable_id', $this->getOwnerRecord()->id)
+                                ->where('enrollable_type', get_class($this->getOwnerRecord()))
+                                ->ignore($record?->id),
+                    ])
+                    ->validationMessages([
+                        'unique' => 'Este(a) estudante já está matriculado nesta turma.',
+                    ]),
                 DatePicker::make('start_date')
                     ->label('Data de matricula')
                     ->default(now())

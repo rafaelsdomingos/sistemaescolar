@@ -23,6 +23,7 @@ class CourseFactory extends Factory
             'academic_coordination_id' => AcademicCoordination::factory(),
             'name' => fake('pt_BR')->sentence(3),
             'modality' => CourseModality::cases()[array_rand(CourseModality::cases())]->value,
+            'description' => fake()->sentence(),
         ];
     }
 }

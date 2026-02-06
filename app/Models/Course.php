@@ -16,7 +16,8 @@ class Course extends Model
     protected $fillable = [
         'academic_coordination_id',
         'name',
-        'modality'
+        'modality',
+        'description'
     ];
 
     protected $casts = [

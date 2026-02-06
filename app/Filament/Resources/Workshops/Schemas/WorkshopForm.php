@@ -6,6 +6,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Schemas\Schema;
+use Illuminate\Validation\Rule;
 
 class WorkshopForm
 {
@@ -23,7 +24,17 @@ class WorkshopForm
                     ->required(),
                 TextInput::make('name')
                     ->label('Nome da oficina')
-                    ->required(),
+                    ->required()
+                    ->rules(
+                        fn (callable $get, $record) =>
+                            Rule::unique('workshops', 'name')
+                                ->where('academic_year_id', $get('academic_year_id'))
+                                ->where('academic_coordination_id', $get('academic_coordination_id'))
+                                ->ignore($record?->id),
+                    )
+                    ->validationMessages([
+                        'unique' => 'Já existe uma oficina com esse nome neste ano letivo.',
+                    ]),
                 Datepicker::make('start_date')
                     ->label('Data de início')
                     ->required(),

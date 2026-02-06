@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('academic_coordination_id')->constrained()->restrictOnDelete();
             $table->string('name');
             $table->string('modality');
+            $table->string('description');
             $table->softDeletes();
             $table->timestamps();
         });
