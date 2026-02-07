@@ -21,7 +21,7 @@ class WorkshopResource extends Resource
 {
     protected static ?string $model = Workshop::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
 
     protected static ?string $recordTitleAttribute = 'name';
 
