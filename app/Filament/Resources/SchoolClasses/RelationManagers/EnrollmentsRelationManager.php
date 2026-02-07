@@ -17,6 +17,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -37,12 +38,14 @@ class EnrollmentsRelationManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(3)
             ->components([
                 Select::make('student_id')
                     ->relationship('student', 'name')
                     ->label('Estudante')
                     ->preload()
                     ->searchable()
+                    ->columnSpan(3)
                     ->required()
                     ->rules([
                         fn (Get $get, $record) =>
@@ -69,8 +72,10 @@ class EnrollmentsRelationManager extends RelationManager
                     )
                     ->native(false)
                     ->required(),
-                TextInput::make('notes')
-                    ->label('Observações'),
+                Textarea::make('notes')
+                    ->label('Observações')
+                    ->columnSpan(3)
+,
             ]);
     }
 

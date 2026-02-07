@@ -19,6 +19,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
@@ -40,6 +41,7 @@ class EnrollmentsRelationManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(3)
             ->components([
                 Select::make('student_id')
                     ->relationship('student', 'name')
@@ -47,6 +49,7 @@ class EnrollmentsRelationManager extends RelationManager
                     ->preload()
                     ->searchable()
                     ->required()
+                    ->columnSpan(3)
                     ->rules([
                         fn (Get $get, $record) =>
                             Rule::unique('enrollments', 'student_id')
@@ -71,8 +74,9 @@ class EnrollmentsRelationManager extends RelationManager
                     )
                     ->native(false)
                     ->required(),
-                TextInput::make('notes')
-                    ->label('Observações'),
+                Textarea::make('notes')
+                    ->label('Observações')
+                    ->columnSpan(3),
             ]);
     }
 
